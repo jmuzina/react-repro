@@ -1,0 +1,7 @@
+{
+  "extends": "@canonical/typescript-config-react",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "resolveJsonModule": true
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "react-repro",
+  "private": true,
+  "version": "0.5.1-experimental.0",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "build": "bun run build:client",
+    "build:client": "webpack --config webpack.config.client.js",
+    "build:server:node": "webpack --config webpack.config.server.node.js",
+    "ssr:bun": "bun run src/ssr/server/server.bun.jsx",
+    "ssr:node": "node --import=tsx src/ssr/server/server.node.jsx"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.0",
+    "@babel/node": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.26.3",
+    "babel-loader": "^9.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "express": "^4.21.2",
+    "mime": "4.0.6",
+    "object-assign": "^4.1.1",
+    "path-to-regexp": "^8.2.0",
+    "rarely": "^0.0.1-development",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "scheduler": "^0.25.0",
+    "tsx": "^4.19.2",
+    "uuid": "^11.0.4",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^6.0.1"
+  }
+}
