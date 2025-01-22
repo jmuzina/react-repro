@@ -1,8 +1,15 @@
-import React, {Suspense, useState, lazy, useEffect} from "react";
+import React, {Suspense, useState, lazy} from "react";
 
 const LazyButton = lazy(() =>
   new Promise((resolve) => {
-    setTimeout(() => resolve(import("./LazyComponent.jsx")), 2000);
+    setTimeout(
+      () => import("./LazyComponent.jsx")
+        .then(lazyComponentModule => {
+          console.log("resolved lazy component");
+          resolve(lazyComponentModule);
+        }),
+      2000
+    )
   })
 );
 
@@ -12,16 +19,15 @@ function Application() {
   return (
     <>
       <h1>React Repro</h1>
-      <h2>React Vite template</h2>
       <Suspense fallback={"Loading..."}>
         <LazyButton/>
       </Suspense>
-      <div>
-        {count}
+      <p>
+        Count: {count}<br/>
         <button
           onClick={() => setCount(count + 1)}
-        >Count is: {count}</button>
-      </div>
+        >Increment count</button>
+      </p>
     </>
   );
 }

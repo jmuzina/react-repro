@@ -1,25 +1,24 @@
-import { renderToReadableStream } from 'react-dom/server';
-import fs from "node:fs";
-import path from "node:path";
-import mime from "mime";
+import {renderToReadableStream} from 'react-dom/server';
 import EntryServer from "./entry-server";
+import path from "node:path";
+
+const cwd = process.cwd();
 
 const handler = async (req) => {
   let url = new URL(req.url);
 
-  if (url.pathname.startsWith("/static")) {
-    return new Response(fs.readFileSync(path.resolve(`./dist/client/${url.pathname.replace(/^\/static/, '')}`)), {
-      headers: {
-        "Content-Type": mime.getType(url.pathname) || "application/octet-stream"
-      },
-    });
+  // Serve static files
+  if (url.pathname.startsWith("/dist/client/")) {
+    const filepath = path.join(cwd, url.pathname);
+    const file = Bun.file(filepath);
+    return new Response(file);
   }
-
-  const stream = await renderToReadableStream(<EntryServer />, { bootstrapScripts: ['./static/main.js']});
+  
+  const stream = await renderToReadableStream(<EntryServer/>);
 
   return new Response(stream, {
     headers: {
-      'Content-Type': 'text/html',
+      'Content-Type': 'text/html; charset=utf-8',
       'Transfer-Encoding': 'chunked'
     },
   });
